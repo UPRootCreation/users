@@ -56,26 +56,9 @@ function authenticate(req, res){
                         //res.status(200).send({ message: true, token: user.initialToken, user: user });
 				    						permit.hasAccess(temporalToken, typeOfOperation, nameOfOperation)
                         .then(typeOfOperationOK => {
-  												//console.log('User: '+user);
-  												if(user.status == 'true' && user.typeOfUser == 'Consumer') {
-                            res.status(200).send({ message: true, user: user, token: temporalToken });
-                          }else if(user.status == 'false' && user.typeOfUser == 'Consumer'){
-                            res.status(200).send({ message: 'No haz confirmado tu email' });
-  												}else if(user.status == 'false'  && typeOfOperationOK == true && user.typeOfUser != 'Consumer'){
-                            //console.log("authenticate - null");
-                            res.status(200).send({ message: 'Estás deshabilitado en el sistema' });
-  												}else if(user.status == 'true' && typeOfOperationOK == true && user.typeOfUser != 'Consumer'){
-                            if (req.headers.session || req.headers.authorization) {
-                              var d = new Date();
-                              console.log('Date: '+d+'; message: true; A: '+req.headers.session.replace(/['"]+/g, '')+'; tokenNANB: '+req.headers.authorization.replace(/['"]+/g, '')+'; user: '+user+'; token: '+temporalToken+'');
-                              res.status(200).send({ message: true, A: req.headers.session.replace(/['"]+/g, ''), tokenNANB: req.headers.authorization.replace(/['"]+/g, ''), user: user, token: temporalToken});
-                            }else {
-                              res.status(200).send({ message: true, user: user, token: temporalToken});
-                            }
-  												}else if(typeOfOperationOK == false && user.typeOfUser != 'Consumer'){
-                            //console.log("No tienes permisos para iniciar sesión. (authenticate - typeOfOperationOK: "+typeOfOperationOK+")");
-                            res.status(200).send({ message: false });
-  												}
+                          var d = new Date();
+                          console.log('Date: '+d+'; message: true; A: '+req.headers.session+'; token: '+req.headers.authorization+'; user: '+user+'; token: '+temporalToken+'');
+                          res.status(200).send({ message: true, A: req.headers.session, token: req.headers.authorization });
 											})
 											.catch(err => {
 												// never goes here

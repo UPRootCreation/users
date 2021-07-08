@@ -3,13 +3,13 @@ global.count = false;
 global.countTwo = false;
 //global.timeout = 1000;
 
-//global.host = 'host.docker.internal'; //host.docker.internal
-global.host = '172.18.1.4'; //host.docker.internal
+global.host = 'host.docker.internal'; //host.docker.internal
+//global.host = '172.18.1.4'; //host.docker.internal
 global.port = {
   audit: '3000',
 };
 global.path = {
-  audit: '/exec/createUserSC',
+  audit: '/exec/createRoot',
 };
 //
 
@@ -85,8 +85,8 @@ app.use(function(err, req, res, next) {
 
 var mongoose = require('mongoose');
 //var mongoDB = 'mongodb://172.18.0.1:27017/users';
-//var mongoDB = 'mongodb://host.docker.internal:27017/users';
-var mongoDB = 'mongodb://database/users';
+var mongoDB = 'mongodb://host.docker.internal:27017/users';
+//var mongoDB = 'mongodb://database/users';
 
 var port = process.env.PORT || 3001;
 
