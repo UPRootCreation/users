@@ -1,0 +1,23 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title Login
+  link(rel='stylesheet' href='public/css/style.css')
+.contenedor-form
+  .toggle
+  .formulario
+    h2 Iniciar sesi&oacute;n
+    form(method='POST')
+      input(type='text' placeholder='Usuario' required='true' name='email')
+      input(type='password' placeholder='Contraseña' required='true' name='password')
+      p Tipo de usuario:
+      select(name='typeOfUser')
+        option Administrator
+        option(selected='') Root
+        option TUser
+      br
+      input(type='submit' value='Iniciar Sesión')
+  .reset-password
+    a(href='#') &iquest;Olvidaste tu contrase&ntilde;a?
+script(src='public/js/jquery-3.5.1.min.js')
+script(src='public/js/main.js')

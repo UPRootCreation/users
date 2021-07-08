@@ -1,0 +1,1 @@
+{ "createAdministrator": false, "createTUser": false, "updateMe": true, "updateAdministrator": false, "updateTUser": false, "deleteMe": true, "deleteAdministrator": false, "deleteTUser": false, "readMe": true, "readAdministrator": false, "readTUser": false, "loginUser": true }
