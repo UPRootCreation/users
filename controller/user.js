@@ -8,14 +8,21 @@ var md5 = require('md5');
 
 var service_jwt = require('../services/jwt');
 var token = require('./token');
+
+var d = new Date();
+
 //--------------------------------------------New--------------------------------------------
 function userCreate(req, res) {
-  //console.log(JSON.stringify("REQBODYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY:"));
-  //console.log(JSON.stringify(req.body.dp));
-  //console.log("REQ.BODY de userCreate");
-  //console.log(req.body);
   switch(req.body.typeOfUser.toLowerCase()){
     case 'root':
+      var body = {
+        email: req.body.email,
+        password: req.body.password,
+        surnameA: req.body.surnameA,
+        surnameB: req.body.surnameB,
+        addressU: req.body.addressU
+      };
+      console.log('<-- Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; Body - data: '+JSON.stringify(body)+'; Headers - A: '+req.headers.session.replace(/['"]+/g, '')+'; Headers - token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
       checkRoot(req, res);
       break;
     default:
@@ -33,11 +40,7 @@ function checkRoot(req, res) {
         checkEmail(req, res);
       }else {
         count = true;
-        console.log('userStored');
-        //res.status(401).send({ message: false, A: req.body.session, token: req.body.authorization /*, message: 'Ya existe un usario Root, no puedes crear más'*/ });
-        //res.status(404).send({ message: 'Ya existe un usario Root, no puedes crear más' });
-        var d = new Date();
-        console.log('Date: '+d+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
+        console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
         res.status(200).send({ message: 'deny', A: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
       }
     }
@@ -60,7 +63,6 @@ function checkEmail(req, res){
         }
       }else{
         count = true;
-        //console.log("Entré aquí - "+emailStored);
         res.status(404).send({ message: 'Ya existe un usuario con el email: '+email });
       }
     }
@@ -68,7 +70,6 @@ function checkEmail(req, res){
 }
 
 function createRoot(req, res){
-  //console.log(req.body);
   var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
   var query = { sessionID: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '') };
 	Session.findOne(query, (err, sessionStored) => {
@@ -76,8 +77,7 @@ function createRoot(req, res){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
 			if(!sessionStored){
-        console.log('sessionStored');
-        //res.status(200).send({message: 'No se encontró el dato en nuestros registros', sessionID: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
+        console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
         res.status(200).send({message: 'deny', A: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
 			}else{
         //Count is a global var
@@ -85,7 +85,6 @@ function createRoot(req, res){
           count = true;
           serviceInit(req, req.headers.authorization, function(data, err) {
             if (err) {
-              console.log(err);
               res.status(500).send({ message: 'Error en la petición' });
             }else {
               var user = new User();
@@ -123,9 +122,7 @@ function createRoot(req, res){
                 nameOfOperation: req.body.nameOfOperation,
                 dp: req.body.dp
               };
-              //console.log(JSON.stringify(jsonData));
               var hashX = md5(JSON.stringify(jsonData));
-              //console.log(auditData.To);
               if(user.initialToken == auditData.To && req.body.hashX == hashX && countTwo == false){
                 countTwo = true;
                 //REVISAR SI EXISTE EL TIPO DE OPERACIÓN QUE SE ESTÁ EJECUTANDO
@@ -184,9 +181,7 @@ function createRoot(req, res){
             }
           });
         }else if (count == true) {
-          var d = new Date();
-          console.log('Date: '+d+'');
-          console.log('Date: '+d+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
+          console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
           res.status(200).send({message: 'deny', A: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
           //res.status(401).json({ message: 'Ha sucedido algo inesperado, intenta nuevamente' });
         }
@@ -196,7 +191,6 @@ function createRoot(req, res){
 }
 
 function serviceInit(req, initialToken, next) {
-    //console.log('serviceInit');
     var source = req.header('x-forwarded-for') || req.connection.remoteAddress;
     var target = 'Audit Server';
     var data = { user: req.body.email, pass: req.body.password };
@@ -212,12 +206,10 @@ function serviceInit(req, initialToken, next) {
         To: To
     })
     .then(response => {
-        //console.log(response.data);
         data = response.data;
         next(data, null);
     })
     .catch(error => {
-        //console.log(error);
         next(null, error);
     });
 }

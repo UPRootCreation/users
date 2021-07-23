@@ -9,7 +9,8 @@ var bcrypt = require('bcrypt-nodejs');
 
 var service_jwt = require('../services/jwt');
 var permit = require("./permit");
-//
+
+var d = new Date();
 
 //var User = require("../models/Users");
 //var errResulUtils = require("../controller/errResulUtils");
@@ -56,8 +57,7 @@ function authenticate(req, res){
                         //res.status(200).send({ message: true, token: user.initialToken, user: user });
 				    						permit.hasAccess(temporalToken, typeOfOperation, nameOfOperation)
                         .then(typeOfOperationOK => {
-                          var d = new Date();
-                          console.log('Date: '+d+'; message: true; A: '+req.headers.session+'; token: '+req.headers.authorization+'; user: '+user+'; token: '+temporalToken+'');
+                          console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: true; A: '+req.headers.session+'; token: '+req.headers.authorization+'');
                           res.status(200).send({ message: true, A: req.headers.session, token: req.headers.authorization });
 											})
 											.catch(err => {

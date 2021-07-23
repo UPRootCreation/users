@@ -10,6 +10,8 @@ var router = express.Router();
 var UserController = require('../controller/user');
 var TokenController = require('../controller/token');
 
+var d = new Date();
+
 /*----------Pruebas de conexión y obtención de datos----------*/
 router.get('/', function(req, res){
 	res.render('index');
@@ -17,6 +19,7 @@ router.get('/', function(req, res){
 
 //rootCreation
 router.post('/getInitialNonce', function (req, res) {
+	console.log('<-- Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; Body - NA: '+req.body.na+'; Headers - A: '+req.body.session+'');
 		User.findOne({ typeOfUser: 'Root' }, (err, userStored) => {
 				if(err) {
 						res.status(500).send({ message: 'Error en la petición' });
@@ -37,15 +40,13 @@ router.post('/getInitialNonce', function (req, res) {
 										res.status(404).send({ message: 'El dato no ha sido guardado' });
 									}else{
 										//console.log(sessionStored);
-										var d = new Date();
-										console.log('Date: '+d+'; A: '+sessionStored.sessionID+'; NA: '+sessionStored.na+'; NB: '+sessionStored.nb+'');
+										console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; A: '+sessionStored.sessionID+'; NA: '+sessionStored.na+'; NB: '+sessionStored.nb+'');
 										res.status(200).send({ A: sessionStored.sessionID, NA: sessionStored.na, NB: sessionStored.nb });
 									}
 								}
 							});
 						}else {
-							var d = new Date();
-							console.log('Date: '+d+'; message: deny; A: '+req.body.session+'; NA: '+req.body.na+'');
+							console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; A: '+req.body.session+'; NA: '+req.body.na+'');
 							res.status(200).send({ message: 'deny', A: req.body.session, NA: req.body.na });
 							//res.status(404).send({ message: "Ya existe un usario Root, no puedes crear más" });
 							//res.status(200).send({ message: false, A: req.body.session, na: req.body.na /*, message: "Ya existe un usario Root"*/ });
