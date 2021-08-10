@@ -58,7 +58,7 @@ function authenticate(req, res){
 				    						permit.hasAccess(temporalToken, typeOfOperation, nameOfOperation)
                         .then(typeOfOperationOK => {
                           console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: true; A: '+req.headers.session+'; token: '+req.headers.authorization+'');
-                          res.status(200).send({ message: true, A: req.headers.session, token: req.headers.authorization });
+                          res.status(200).send({ message: true, R: { addTran: user.addressTransaction, addCont: user.addressContract }, dx: user.nameOfUser, token: req.headers.authorization });
 											})
 											.catch(err => {
 												// never goes here
