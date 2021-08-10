@@ -46,6 +46,7 @@ router.post('/getInitialNonce', function (req, res) {
 								}
 							});
 						}else {
+							console.log("userStored");
 							console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; A: '+req.body.session+'; NA: '+req.body.na+'');
 							res.status(200).send({ message: 'deny', A: req.body.session, NA: req.body.na });
 							//res.status(404).send({ message: "Ya existe un usario Root, no puedes crear más" });
