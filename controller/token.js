@@ -43,7 +43,7 @@ function authenticate(req, res){
 	    					//Duvuelve los datos del usuario logueado
 	    					if(req.body.gethash){
 	    						//Delvover un token de JWT
-	    						console.log("ERROR");
+	    						//console.log("ERROR");
 	    					}else{
 	    						var temporalToken = service_jwt.createToken(user);
                   //console.log(temporalToken);
@@ -62,7 +62,7 @@ function authenticate(req, res){
 											})
 											.catch(err => {
 												// never goes here
-												console.log(err);
+												//console.log(err);
 												return res.status(505).json({message: "Error 505 - Error en la promesa"});
 											});
 							    		}
@@ -240,11 +240,11 @@ function tokenIsValid(req, res){
 			}else{
 				if(payload.life <= valid){
 					bol = false;
-					console.log("Token caducado");
+					//console.log("Token caducado");
 					res.status(200).send({message: bol});
 				}else{
 					bol = true;
-					console.log("Token vigente");
+					//console.log("Token vigente");
 					res.status(200).send({message: bol});
 				}
 			}

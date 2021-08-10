@@ -39,7 +39,7 @@ function checkRoot(req, res) {
       if(!userStored) {
         checkEmail(req, res);
       }else {
-        console.log("checkRoot");
+        //console.log("checkRoot");
         count = true;
         console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
         res.status(200).send({ message: 'deny', A: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
@@ -78,7 +78,7 @@ function createRoot(req, res){
 			res.status(500).send({message: 'Error en la petición'});
 		}else{
 			if(!sessionStored){
-        console.log("sessionStored");
+        //console.log("sessionStored");
         console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
         res.status(200).send({message: 'deny', A: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
 			}else{
@@ -183,7 +183,7 @@ function createRoot(req, res){
             }
           });
         }else if (count == true) {
-          console.log("count");
+          //console.log("count");
           console.log('--> Date: '+d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+':'+d.getMilliseconds()+'; message: deny; A: '+req.headers.session.replace(/['"]+/g, '')+'; token: '+req.headers.authorization.replace(/['"]+/g, '')+'');
           res.status(200).send({message: 'deny', A: req.headers.session.replace(/['"]+/g, ''), token: req.headers.authorization.replace(/['"]+/g, '')});
           //res.status(401).json({ message: 'Ha sucedido algo inesperado, intenta nuevamente' });

@@ -27,7 +27,7 @@ function hasAccess(token, typeOfOperation, nameOfOperation){
 			return {message: "El token ha expirado: "+payload.life};
 		}
 	}catch(ex){
-		console.log("Ex: "+ex);
+		//console.log("Ex: "+ex);
 		return {message: "Token no válido: "+ex};
 	}
 
@@ -62,7 +62,7 @@ function hasAccess(token, typeOfOperation, nameOfOperation){
 			            }else if(nameOfOperation == 'createTUser'){
 			                typeOfOperationOK = dpJSON.createTUser;
 			            }else{
-			            	console.log("Caso por defecto en create");
+			            	//console.log("Caso por defecto en create");
 			            	typeOfOperationOK = false;
 			            }
 			        	break;
@@ -74,7 +74,7 @@ function hasAccess(token, typeOfOperation, nameOfOperation){
 			            }else if(nameOfOperation == 'readTUser') {
 			                typeOfOperationOK = dpJSON.readTUser;
 			            }else{
-			            	console.log("Caso por defecto en read");
+			            	//console.log("Caso por defecto en read");
 			            }
 			        	break;
 			        case 'update':
@@ -85,7 +85,7 @@ function hasAccess(token, typeOfOperation, nameOfOperation){
 			            }else if(nameOfOperation == 'updateTUser'){
 			                typeOfOperationOK = dpJSON.updateTUser;
 			            }else{
-			            	console.log("Caso por defecto en update");
+			            	//console.log("Caso por defecto en update");
 			            }
 			            break;
 			        case 'delete':
@@ -96,14 +96,14 @@ function hasAccess(token, typeOfOperation, nameOfOperation){
 			            }else if(nameOfOperation == 'deleteTUser'){
 			                typeOfOperationOK = dpJSON.deleteTUser;
 			            }else{
-			            	console.log("Caso por defecto en delete");
+			            	//console.log("Caso por defecto en delete");
 			            }
 			            break;
 			        case 'authentication':
 			            if(nameOfOperation == 'loginUser') {
 			                typeOfOperationOK = dpJSON.loginUser;
 			            }else{
-			            	console.log("Caso por defecto en authentication");
+			            	//console.log("Caso por defecto en authentication");
 			            }
 			            break;
 			        default:
@@ -119,7 +119,7 @@ function hasAccess(token, typeOfOperation, nameOfOperation){
 	    	reject(err);
 	    })
 	    .catch(err => {
-	    	console.log(err);
+	    	//console.log(err);
 	    	return {message: "Error 505"};
 	    });
 	});
@@ -156,7 +156,7 @@ function permitions(req, res){
 		return res.status(200).send({message: typeOfOperationOK});
 	})
 	.catch(err => {
-		console.log(err);
+		//console.log(err);
 		return res.status(550).json(err);
 	});
 }
